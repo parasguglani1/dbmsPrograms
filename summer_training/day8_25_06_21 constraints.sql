@@ -1,0 +1,64 @@
+----------------------------------------------------CONSTRAINTS 
+
+DROP TABLE PERSON;
+CREATE TABLE PERSON(
+PID INT,
+PNAME VARCHAR(20) NOT NULL,
+AGE INT CHECK (AGE>18),
+LOC VARCHAR(20) DEFAULT  'HOME STATION',
+CONSTRAINT PK PRIMARY KEY(PID)
+);
+
+
+--only these values satisfy constraints
+INSERT INTO PERSON VALUES (1,'AMAN',20,'DELHI');
+INSERT INTO PERSON(PID, PNAME,AGE) VALUES (3,'MCKD',20);
+SELECT * FROM person;
+
+--adding a constraint
+ALTER TABLE PERSON
+ADD UNIQUE(AGE);
+
+--deleting a constraint
+ALTER TABLE PERSON
+DROP CONSTRAINT PK;
+-- you can't add a constrant which is already being violated by existing data
+delete from person where PNAME= 'MKCD';
+
+CREATE TABLE ITEMS
+(
+COSTP DECIMAL(5,2) CHECK (COSTP>0),
+SELLING DECIMAL(5,2) CHECK(SELLING>0),
+ CHECK (SELLING>COSTP)
+);
+
+INSERT INTO ITEMS VALUES (200.10,300);
+SELECT * FROM items;
+
+
+-- PERSON (PERSONID PRIMARY KEY .FULL NAME NOT NULL, AGE CHECK AGE>0);
+-- ORDERS (ORDERID PRIMARY KEY, ORDER_NAME NOT NULL, PERSONID INT)
+
+DROP TABLE PERSON;
+DROP TABLE orders;
+CREATE TABLE Person (
+PersonID int,
+Full_Name varchar(25) not null,
+Age int check ( age>0) ,
+PRIMARY KEY (PersonID)
+); 
+
+create table orders
+(orderid int,
+Order_name char(10) not null,
+PERSONID int,
+primary key(orderid),
+FOREIGN KEY (PERSONID) REFERENCES PERSON(PERSONID)
+);
+
+INSERT INTO PERSON VALUES(1, 'AMAN',25); 
+INSERT INTO PERSON VALUES(2, 'RAM',55);
+INSERT INTO PERSON VALUES(3, 'MAC',35);
+SELECT * FROM PERSON;
+SELECT * FROM ORDERS;
+INSERT INTO ORDERS VALUES(110, 'BOOKS',3);
